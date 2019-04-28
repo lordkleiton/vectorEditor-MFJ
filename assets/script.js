@@ -36,6 +36,7 @@ function drawToCurrentMousePosition(e){
 		let l = pos.length;
 	
 		if (l > 0){
+			ctx.beginPath();
 			ctx.moveTo(pos[l-1][0], pos[l-1][1]);
 			ctx.lineTo(Math.trunc(e.clientX / 50) * 50, Math.trunc(e.clientY / 50) * 50);
 			ctx.stroke();
@@ -74,20 +75,27 @@ function redraw(){
 	});
 
 	for (let i = 0; i < (pos.length - 1); i++){
+		ctx.beginPath();
 		ctx.moveTo(pos[i][0], pos[i][1]);
 		ctx.lineTo(pos[i + 1][0], pos[i + 1][1]);
 		ctx.stroke();
 	}
 
-	ctx.strokeStyle = "red";
+	drawResultLine();
 
+	ctx.strokeStyle = "#000";
+}
+
+//desenha a linha da soma vetorial
+function drawResultLine(){
 	if (pos.length > 2){
+		ctx.strokeStyle = "red";
+
+		ctx.beginPath();
 		ctx.moveTo(pos[0][0], pos[0][1]);
 		ctx.lineTo(pos[pos.length - 1][0], pos[pos.length - 1][1]);
 		ctx.stroke();
 	}
-
-	ctx.strokeStyle = "#000";
 }
 
 //limpa tudo
@@ -97,21 +105,21 @@ function reset(){
 	drawGrid();
 }
 
+//desenha o grid
 function drawGrid(){
 	ctx.strokeStyle = "#ccc";
 
 	for (let i = 0; i < canvas.width / 50; i++){
+		//vertical
 		ctx.moveTo(i * 50, 0);
 		ctx.lineTo(i * 50, canvas.height);
 		ctx.stroke();
-	}
-	for (let i = 0; i < canvas.height / 50; i++){
+
+		//horizontal
 		ctx.moveTo(0, i * 50, 0);
 		ctx.lineTo(canvas.width, i * 50);
 		ctx.stroke();
 	}
-
-	ctx.fill();
 
 	ctx.strokeStyle = "#000";
 }
