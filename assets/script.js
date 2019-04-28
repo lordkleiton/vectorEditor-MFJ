@@ -48,7 +48,7 @@ function click(e){
 	ctx.arc(e.clientX, e.clientY, 5, 0, 2 * Math.PI);
 	ctx.fill();
 	ctx.stroke();
-	pos.push([e.clientX, e.clientY]);
+	pos.push([e.clientX, e.clientY, Math.trunc(e.clientX / 100),Math.trunc(e.clientY / 100)]);
 
 	redraw();
 }
@@ -73,6 +73,18 @@ function redraw(){
 		ctx.lineTo(pos[i + 1][0], pos[i + 1][1]);
 		ctx.stroke();
 	}
+
+	if (pos.length > 2){
+		ctx.moveTo(pos[0][0], pos[0][1]);
+		ctx.lineTo(pos[pos.length - 1][0], pos[pos.length - 1][1]);
+		ctx.stroke();
+	}
+}
+
+//limpa tudo
+function reset(){
+	pos = [];
+	clearCanvas(ctx, canvas);
 }
 
 

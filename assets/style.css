@@ -1,3 +1,15 @@
 canvas:hover{
     cursor: crosshair;
 }
+
+/* .grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 70%;
+    margin: auto;
+} */
+
+/* .grid div{
+    display: flex;
+    justify-content: center;
+} */
