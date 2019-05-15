@@ -5,7 +5,7 @@ let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
 //configurando o canvas
-let draw = true;							//controlando o estado de desenhar
+let draw = true;										//controlando o estado de desenhar
 let colors = ['800ecb', 'b331b2', 'a4bc13', 'e05886', '0a1e55', '1498e1', '1e2ee2', '60e2dc', '40b40e', 'df5b0b'];
 
 //eventos do canvas
@@ -14,25 +14,25 @@ canvas.addEventListener('keydown', stopDrawing);
 canvas.addEventListener('mousemove', drawToCurrentMousePosition);
 
 //outras configurações
-let pos = [];								//array de posições
-let div = 50;								//divisor / multiplicador
-let size = 15;								//tamanho da cabeça de seta
+let pos = [];											//array de posições
+let div = 50;											//divisor / multiplicador
+let size = 15;											//tamanho da cabeça de seta
 
 //pegando os botões
 let btnReset = document.getElementById('btn-reset');
 let btnShuffle = document.getElementById('btn-shuffle');
 
 //iniciando definindo a cor padrão, com grid e escondendo os botões
-ctx.fillStyle = "black";					//cor de preenchimento
+ctx.fillStyle = "black";								//cor de preenchimento
 drawGrid();									
 hideButtons();
 
-function clearCanvas(){						//limpa o canvas
+function clearCanvas(){									//limpa o canvas
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.beginPath();
 }
 
-function click(e){							//clique do mouse
+function click(e){										//clique do mouse
 	draw = (pos.length < 10) ? true : false;
 
 	if (draw){
@@ -48,7 +48,7 @@ function click(e){							//clique do mouse
 	}
 }
 
-function drawArrowTip(fromX, fromY, toX, toY, size){					//https://stackoverflow.com/a/6333775
+function drawArrowTip(fromX, fromY, toX, toY, size){	//https://stackoverflow.com/a/6333775
 	let angle = Math.atan2(toY - fromY, toX - fromX);
 
 	ctx.lineTo(toX - size * Math.cos(angle - Math.PI / 6), toY - size * Math.sin(angle - Math.PI / 6));
@@ -56,7 +56,7 @@ function drawArrowTip(fromX, fromY, toX, toY, size){					//https://stackoverflow
 	ctx.lineTo(toX - size * Math.cos(angle + Math.PI / 6), toY - size * Math.sin(angle + Math.PI / 6));
 }
 
-function drawGrid(){						//desenha o grid
+function drawGrid(){									//desenha o grid
 	ctx.strokeStyle = "#ccc";
 
 	for (let i = 0; i < canvas.width / div; i++){
@@ -74,7 +74,7 @@ function drawGrid(){						//desenha o grid
 	ctx.strokeStyle = "black";
 }
 
-function drawResultLine(){					//desenha a linha da soma vetorial
+function drawResultLine(){								//desenha a linha da soma vetorial
 	ctx.strokeStyle = "red";
 
 	ctx.beginPath();
@@ -86,7 +86,7 @@ function drawResultLine(){					//desenha a linha da soma vetorial
 	ctx.stroke();
 }
 
-function drawToCurrentMousePosition(e){		//imprime posição do mouse
+function drawToCurrentMousePosition(e){					//imprime posição do mouse
 	refresh();
 
 	if (draw){
@@ -104,27 +104,27 @@ function drawToCurrentMousePosition(e){		//imprime posição do mouse
 	}
 }
 
-function hideButtons(){						//escondendo os botões
+function hideButtons(){									//escondendo os botões
 	btnReset.style.display = pos.length ? 'inline-block' : 'none'
 	btnShuffle.style.display = (pos.length > 2) ? 'inline-block' : 'none'
 }
 
-function random(min, max) {					//valor inteiro aleatorio incluindo o menor e excluindo o maior
+function random(min, max) {								//valor inteiro aleatorio incluindo o menor e excluindo o maior
 	return Math.floor(Math.random() * (max - min)) + min
 }
 
-function refresh(){							//atualiza a tela
+function refresh(){										//atualiza a tela
 	clearCanvas();
 	drawGrid();
 	redraw();
 	hideButtons();
 }
 
-function stopDrawing(e){					//para de desenhar
+function stopDrawing(e){								//para de desenhar
 	if (e.key === 'Escape') draw = false;
 }
 
-function redraw(){							//redesenha os pontos 
+function redraw(){										//redesenha os pontos 
 	for (let i = 0; i < (pos.length - 1); i++){
 		ctx.strokeStyle = `#${colors[i]}`;
 		ctx.beginPath();
@@ -145,13 +145,13 @@ function redraw(){							//redesenha os pontos
 	ctx.strokeStyle = "black";
 }
 
-function reset(){							//limpa tudo
+function reset(){										//limpa tudo
 	pos = [];
 	clearCanvas();
 	drawGrid();
 }
 
-function shuffle(){							//aleatoriza vetores
+function shuffle(){										//aleatoriza vetores
 	for (let i = 1; i < pos.length - 1; i++){
 		pos[i][0] = random(0, 11) * div;
 		pos[i][1] = random(0, 11) * div;
