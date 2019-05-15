@@ -16,6 +16,7 @@ canvas.addEventListener('mousemove', drawToCurrentMousePosition);
 //outras configurações
 let pos = [];								//array de posições
 let div = 50;								//divisor / multiplicador
+let size = 15;								//tamanho da cabeça de seta
 
 //pegando os botões
 let btnReset = document.getElementById('btn-reset');
@@ -47,6 +48,14 @@ function click(e){							//clique do mouse
 	}
 }
 
+function drawArrowTip(fromX, fromY, toX, toY, size){					//https://stackoverflow.com/a/6333775
+	let angle = Math.atan2(toY - fromY, toX - fromX);
+
+	ctx.lineTo(toX - size * Math.cos(angle - Math.PI / 6), toY - size * Math.sin(angle - Math.PI / 6));
+    ctx.moveTo(toX, toY);
+	ctx.lineTo(toX - size * Math.cos(angle + Math.PI / 6), toY - size * Math.sin(angle + Math.PI / 6));
+}
+
 function drawGrid(){						//desenha o grid
 	ctx.strokeStyle = "#ccc";
 
@@ -71,6 +80,9 @@ function drawResultLine(){					//desenha a linha da soma vetorial
 	ctx.beginPath();
 	ctx.moveTo(pos[0][0], pos[0][1]);
 	ctx.lineTo(pos[pos.length - 1][0], pos[pos.length - 1][1]);
+
+	drawArrowTip(pos[0][0], pos[0][1], pos[pos.length - 1][0], pos[pos.length - 1][1], size);
+
 	ctx.stroke();
 }
 
@@ -118,6 +130,7 @@ function redraw(){							//redesenha os pontos
 		ctx.beginPath();
 		ctx.moveTo(pos[i][0], pos[i][1]);
 		ctx.lineTo(pos[i + 1][0], pos[i + 1][1]);
+		drawArrowTip(pos[i][0], pos[i][1], pos[i + 1][0], pos[i + 1][1], size);
 		ctx.stroke();
 	}
 
