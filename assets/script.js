@@ -4,19 +4,32 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
+//configurando o canvas
+let draw = true;							//controlando o estado de desenhar
+let colors = ['800ecb', 'b331b2', 'a4bc13', 'e05886', '0a1e55', '1498e1', '1e2ee2', '60e2dc', '40b40e', 'df5b0b'];
+
 //eventos do canvas
 canvas.addEventListener('click', click);
 canvas.addEventListener('keydown', stopDrawing);
 canvas.addEventListener('mousemove', drawToCurrentMousePosition);
 
-ctx.fillStyle = "black";					//cor de preenchimento
-
+//outras configurações
 let pos = [];								//array de posições
-let draw = true;							//controlando o estado de desenhar
 let div = 50;								//divisor / multiplicador
-let colors = ['800ecb', 'b331b2', 'a4bc13', 'e05886', '0a1e55', '1498e1', '1e2ee2', '60e2dc', '40b40e', 'df5b0b'];
 
-drawGrid();									//iniciando com grid
+//pegando os botões
+let btnReset = document.getElementById('btn-reset');
+let btnShuffle = document.getElementById('btn-shuffle');
+
+//iniciando definindo a cor padrão, com grid e escondendo os botões
+ctx.fillStyle = "black";					//cor de preenchimento
+drawGrid();									
+hideButtons();
+
+function clearCanvas(){						//limpa o canvas
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.beginPath();
+}
 
 function click(e){							//clique do mouse
 	draw = (pos.length < 10) ? true : false;
@@ -34,8 +47,31 @@ function click(e){							//clique do mouse
 	}
 }
 
-function stopDrawing(e){					//para de desenhar
-	if (e.key === 'Escape') draw = false;
+function drawGrid(){						//desenha o grid
+	ctx.strokeStyle = "#ccc";
+
+	for (let i = 0; i < canvas.width / div; i++){
+		//vertical
+		ctx.moveTo(i * div, 0);
+		ctx.lineTo(i * div, canvas.height);
+		ctx.stroke();
+
+		//horizontal
+		ctx.moveTo(0, i * div, 0);
+		ctx.lineTo(canvas.width, i * div);
+		ctx.stroke();
+	}
+
+	ctx.strokeStyle = "black";
+}
+
+function drawResultLine(){					//desenha a linha da soma vetorial
+	ctx.strokeStyle = "red";
+
+	ctx.beginPath();
+	ctx.moveTo(pos[0][0], pos[0][1]);
+	ctx.lineTo(pos[pos.length - 1][0], pos[pos.length - 1][1]);
+	ctx.stroke();
 }
 
 function drawToCurrentMousePosition(e){		//imprime posição do mouse
@@ -56,9 +92,24 @@ function drawToCurrentMousePosition(e){		//imprime posição do mouse
 	}
 }
 
-function clearCanvas(){						//limpa o canvas
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.beginPath();
+function hideButtons(){						//escondendo os botões
+	btnReset.style.display = pos.length ? 'inline-block' : 'none'
+	btnShuffle.style.display = (pos.length > 2) ? 'inline-block' : 'none'
+}
+
+function random(min, max) {					//valor inteiro aleatorio incluindo o menor e excluindo o maior
+	return Math.floor(Math.random() * (max - min)) + min
+}
+
+function refresh(){							//atualiza a tela
+	clearCanvas();
+	drawGrid();
+	redraw();
+	hideButtons();
+}
+
+function stopDrawing(e){					//para de desenhar
+	if (e.key === 'Escape') draw = false;
 }
 
 function redraw(){							//redesenha os pontos 
@@ -81,56 +132,19 @@ function redraw(){							//redesenha os pontos
 	ctx.strokeStyle = "black";
 }
 
-function drawResultLine(){					//desenha a linha da soma vetorial
-	ctx.strokeStyle = "red";
-
-	ctx.beginPath();
-	ctx.moveTo(pos[0][0], pos[0][1]);
-	ctx.lineTo(pos[pos.length - 1][0], pos[pos.length - 1][1]);
-	ctx.stroke();
-}
-
 function reset(){							//limpa tudo
 	pos = [];
 	clearCanvas();
 	drawGrid();
 }
 
-function refresh(){							//atualiza a tela
-	clearCanvas();
-	drawGrid();
-	redraw();
-}
-
-function drawGrid(){						//desenha o grid
-	ctx.strokeStyle = "#ccc";
-
-	for (let i = 0; i < canvas.width / div; i++){
-		//vertical
-		ctx.moveTo(i * div, 0);
-		ctx.lineTo(i * div, canvas.height);
-		ctx.stroke();
-
-		//horizontal
-		ctx.moveTo(0, i * div, 0);
-		ctx.lineTo(canvas.width, i * div);
-		ctx.stroke();
-	}
-
-	ctx.strokeStyle = "black";
-}
-
-function shuffle(){
+function shuffle(){							//aleatoriza vetores
 	for (let i = 1; i < pos.length - 1; i++){
 		pos[i][0] = random(0, 11) * div;
 		pos[i][1] = random(0, 11) * div;
 	}
 
 	refresh();
-}
-
-function random(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min
 }
 
 /* 
