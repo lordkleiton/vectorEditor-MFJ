@@ -8,27 +8,23 @@
     <title>Editor Vetores</title>
 </head>
 <body>
-            <div style="    width: 500px;
-            margin: auto;">
-                <canvas tabindex='1' id="canvas" width="500" height="500" style="border: 1px solid #ccc"></canvas>
-                <div class="controls">
-                    <button id="btn-reset" onclick="reset()">Limpar</button>
-                    <button id="btn-shuffle" onclick="shuffle()">Shuffle</button>
-                </div>
-            </div>
-    <div class="grid">
-        
-        <div>
-            <h1>Instruções</h1>
-            <p>Clique na tela para selecionar o ponto inicial do vetor</p>
-            <p>Mova o mouse dentro da área para definir o tamanho do vetor</p>
-            <p>Clique no ponto que desejar para encerrar o vetor atual</p>
-            <p>Pressione Esc para parar de criar novos vetores</p>
-            <p>Caso tenha parado de criar novos vetores e deseje voltar a criar, basta clicar novamente na área de desenho</p>
-            <p>Pressione limpar para recomeçar</p>
-            <p>Pressione shuffle para aleatorizar os vetores</p>
+    <div>
+        <canvas tabindex='1' id="canvas" width="500" height="500" style="border: 1px solid #ccc"></canvas>
+        <div class="controls">
+            <button id="btn-reset" onclick="reset()">Limpar</button>
+            <button id="btn-shuffle" onclick="shuffle()">Shuffle</button>
         </div>
-        
+    </div>
+    <div>
+        <h1>Instruções</h1>
+        <p>Clique na tela para selecionar o ponto inicial do vetor</p>
+        <p>Mova o mouse dentro da área para definir o tamanho do vetor</p>
+        <p>Clique no ponto que desejar para encerrar o vetor atual</p>
+        <p>O vetor em vermelho corresponde ao vetor que representa a soma dos outros vetores</p>
+        <p>Pressione Esc para parar de criar novos vetores</p>
+        <p>Caso tenha parado de criar novos vetores e deseje voltar a criar, basta clicar novamente na área de desenho</p>
+        <p>Pressione limpar para recomeçar</p>
+        <p>Pressione shuffle para aleatorizar os vetores</p>
     </div>
 </body>
 </html>
