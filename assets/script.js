@@ -120,6 +120,19 @@ function drawGrid(){						//desenha o grid
 	ctx.strokeStyle = "black";
 }
 
+function shuffle(){
+	for (let i = 1; i < pos.length - 1; i++){
+		pos[i][0] = random(0, 11) * div;
+		pos[i][1] = random(0, 11) * div;
+	}
+
+	refresh();
+}
+
+function random(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min
+}
+
 /* 
 
 modulo = Math.sqrt( Math.pow(Xb - Xa, 2) + Math.pow(Yb - Ya, 2) )
