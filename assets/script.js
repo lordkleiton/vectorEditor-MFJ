@@ -36,7 +36,7 @@ function click(e){										//clique do mouse
 	draw = (pos.length < 10) ? true : false;
 
 	if (draw){
-		let x = Math.trunc(e.clientX / div) * div;
+		let x = Math.trunc(e.clientX / div) * div - canvas.width;
 		let y = Math.trunc(e.clientY / div) * div;
 	
 		ctx.beginPath();
@@ -89,12 +89,17 @@ function drawResultLine(){								//desenha a linha da soma vetorial
 function drawToCurrentMousePosition(e){					//imprime posição do mouse
 	refresh();
 
+	
+
 	if (draw){
 		let l = pos.length;
 	
 		if (l > 0){
-			let x = Math.trunc(e.clientX / div) * div;
+			let x = Math.trunc(e.clientX / div) * div - canvas.width;
 			let y = Math.trunc(e.clientY / div) * div;
+
+
+			console.log(x, y)
 
 			ctx.beginPath();
 			ctx.moveTo(pos[l-1][0], pos[l-1][1]);
